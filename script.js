@@ -1,4 +1,4 @@
-let N = 10;
+let N = 5;
 let blockSize = 500 / N;
 let gameArea;
 
@@ -51,6 +51,11 @@ function highLight(block){
     if(swap == null){
         swap=block;
     } else {
+        var b_top = parseInt(block.css("top"))
+        var s_top = parseInt(swap.css("top"))
+        var b_left = parseInt(block.css("left"))
+        var s_left = parseInt(swap.css("left"))
+    } if (((b_top-s_top) == 0 && (b_left-s_left) != 0) ||((b_top-s_top)!=0 && (b_left-s_left) == 0)) {
         var top = block.css("top")
         var left = block.css("left")
         block.animate({

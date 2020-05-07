@@ -1,4 +1,4 @@
-let N = 5
+let N = 6
 let blockSize = 500 / N;
 let gameArea;
 
@@ -10,11 +10,22 @@ let candys = [
     {color: "yellow", img: '<img src="./img/yellow.png" class="yellow" />'}
 ]
 
+let candys_s = [
+    {color: "green_s", img: '<img src="./img/green_s.png" class="green" />'},
+    {color: "orange_s", img: '<img src="./img/orange_s.png" class="orange" />'},
+    {color: "purple_s", img: '<img src="./img/purple_s.png" class="purple" />'},
+    {color: "red_s", img: '<img src="./img/red_s.png" class="red" />'},
+    {color: "yellow_s", img: '<img src="./img/yellow_s.png" class="yellow" />'}
+]
+
 let map = []
 let swap = null
 let swapID = null
 var counter = 10;
 
+/**
+ * Map feltöltése cukorkákkal
+ */
 function generateMap(){
     for (let i = 0; i < N; i++) {
         for (let j = 0; j < N; j++) {
@@ -24,10 +35,13 @@ function generateMap(){
     }
 }
 
+/**
+ * Map kiírása a játéktáblára
+ */
 function drawMap(){
     scanMap();
     for (let i = 0; i < N*N; i++){
-        if(map[i][0].className == "space"){
+        if(map[i][0].className == "space"){//ha van üres mező
             var top = parseInt(map[i][0].style.top)
             var left = parseInt(map[i][0].style.left)
             map[i][0] = generateCandy(top/blockSize, left/blockSize)[0];
@@ -40,6 +54,10 @@ function drawMap(){
         })
         gameArea.append(element)
     })
+    /*gameArea.children.forEach((element, i)=>{
+        console.log(element)
+    })*/
+    //console.log(gamearea.children[0])
 }
 
 function swapCandys(element, i){
@@ -73,6 +91,22 @@ function swapCandys(element, i){
 
 function scanMap(){
     for (let i=0; i < N*N; i+=N){
+        for(let j=0; j < N-3; j++){
+            if( map[i+j][0]!="" && map[i+j+1][0]!="" && map[i+j+2][0]!="" && map[i+j+3][0]!="" && (map[i+j][0].className == map[i+j+1][0].className) && (map[i+j+1][0].className == map[i+j+2][0].className) && (map[i+j+2][0].className == map[i+j+3][0].className)){
+                for(let l=0; l < 3; l++){
+                    var space = $("<div class='space'></div>");
+                    space.css({
+                        "top" : map[i+j+l].css("top"),
+                        "left" : map[i+j+l].css("left")
+                    })
+                    map[i+j+l]=space
+                }
+                map[i+j+3]=generateCandy(parseInt(map[i+j+3].css("top"))/blockSize, parseInt(map[i+j+3].css("left"))/blockSize, 0)
+                gapLoad();
+            }
+        }
+    }
+    for (let i=0; i < N*N; i+=N){
         for(let j=0; j < N-2; j++){
             if( map[i+j][0]!="" && map[i+j+1][0]!="" && map[i+j+2][0]!="" && (map[i+j][0].className == map[i+j+1][0].className) && (map[i+j+1][0].className == map[i+j+2][0].className)){
                 for(let l=0; l < 3; l++){
@@ -101,18 +135,30 @@ function gapLoad(){
     }
 }
 
-function generateCandy(i, j){
-    let random = Math.random();
-    if (0 <= random && random < 0.20) {
-        var candy = $(candys[0].img)
-    } else if (0.20 <= random && random < 0.40) {
-        var candy = $(candys[1].img)
-    } else if (0.40 <= random && random < 0.60) {
-        var candy = $(candys[2].img)
-    } else if (0.60 <= random && random < 0.80) {
-        var candy = $(candys[3].img)
+function generateCandy(i, j, s=null){
+    if(s == 0){
+        var candy = $(candys_s[0].img)
+    } else if(s == 1){
+        var candy = $(candys_s[1].img)
+    } else if(s == 1){
+        var candy = $(candys_s[2].img)
+    } else if(s == 1){
+        var candy = $(candys_s[3].img)
+    } else if(s == 1){
+        var candy = $(candys_s[4].img)
     } else {
-        var candy = $(candys[4].img)
+        let random = Math.random();
+        if (0 <= random && random < 0.20) {
+            var candy = $(candys[0].img)
+        } else if (0.20 <= random && random < 0.40) {
+            var candy = $(candys[1].img)
+        } else if (0.40 <= random && random < 0.60) {
+            var candy = $(candys[2].img)
+        } else if (0.60 <= random && random < 0.80) {
+            var candy = $(candys[3].img)
+        } else {
+            var candy = $(candys[4].img)
+        }
     }
     candy.addClass('candy');
     candy.css({

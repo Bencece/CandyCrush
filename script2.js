@@ -13,6 +13,7 @@ let candys = [
 let map = []
 let swap = null
 let swapID = null
+var counter = 10;
 
 function generateMap(){
     for (let i = 0; i < N; i++) {
@@ -49,6 +50,7 @@ function drawMap(){
         })
         gameArea.append(element)
     })
+    scanMap();
 }
 
 function swapCandys(element, i){
@@ -65,7 +67,6 @@ function swapCandys(element, i){
         var e_left = parseInt(element[0].style.left)
         var s_left = parseInt(swap[0].style.left)
         if((((e_top-s_top) == 0 && (e_left-s_left) != 0) || ((e_top-s_top)!=0 && (e_left-s_left) == 0)) && Math.abs(e_top-s_top) <= 100 && Math.abs(e_left-s_left) <= 100){
-            console.log("belépett")
             map[i][0]=swap[0]
             map[swapID][0]=tmp
             
@@ -76,6 +77,8 @@ function swapCandys(element, i){
             map[i][0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
             swap=null;
             swapID=null;
+            counter--;
+            $(".counter").text(counter)
             drawMap();
         } else {
             swap[0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
@@ -83,8 +86,18 @@ function swapCandys(element, i){
             swapID=null;
             drawMap();
         }
-        
-        
+    }
+}
+
+function scanMap(){
+    for (let i=0; i < N*N; i+=5){
+        for(let j=0; j < N-2; j++){
+            if((map[i+j][0].className == map[i+j+1][0].className) && (map[i+j+1][0].className == map[i+j+2][0].className)){
+                map[i+j][0].style.backgroundColor="yellow";
+                map[i+j+1][0].style.backgroundColor="yellow";
+                map[i+j+2][0].style.backgroundColor="yellow";
+            }
+        }
     }
 }
 

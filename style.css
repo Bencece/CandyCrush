@@ -33,3 +33,11 @@ body{
     text-shadow: 2px 2px 2px purple;
     text-align: center;
 }
+
+
+.candy{
+    background-color: rgba(83, 158, 243, 0.74);
+    position: absolute;
+    border: solid rgb(0, 119, 255) 1px;
+    border-radius: 8px 8px 8px 8px;
+}

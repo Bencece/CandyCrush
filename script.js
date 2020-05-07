@@ -95,28 +95,31 @@ function highLight(block){
 }
 
 function scanMap(){
-    /*$(".block").each((i, element) =>{
+    $(".block").each((i, element) =>{
         blocks[element.id]= element
     })
-    for(var j=0; j < N; j+=4){
-    for (let i = 0; i < N-2; i++) {
+    for (let i = 0; i < N*N; i+=5) {
+        for(let j = 0; j<N-2;j++){
         //console.log((blocks[i].children[0].getAttribute("class") == blocks[i+1].children[0].getAttribute("class")) && (blocks[i+1].children[0].getAttribute("class") == blocks[i+2].children[0].getAttribute("class")))
         
         console.log("Kint: "+(i+j))
         if((blocks[i+j].children[0].getAttribute("class") == blocks[i+1+j].children[0].getAttribute("class")) && (blocks[i+1+j].children[0].getAttribute("class") == blocks[i+2+j].children[0].getAttribute("class"))){
             console.log("juhé")
-            console.log(i+" "+j)
-            blocks[i+j].removeChild(blocks[i+j].childNodes[0])
+            console.log(i)
+            /*blocks[i+j].removeChild(blocks[i+j].childNodes[0])
             blocks[i+1+j].removeChild(blocks[i+1+j].childNodes[0])
-            blocks[i+2+j].removeChild(blocks[i+2+j].childNodes[0])
+            blocks[i+2+j].removeChild(blocks[i+2+j].childNodes[0])*/
+            blocks[i+j].style.backgroundColor ="yellow"
+            blocks[i+1+j].style.backgroundColor ="yellow"
+            blocks[i+2+j].style.backgroundColor ="yellow"
+            /*for (let k = N*N-1; k >= 0; k--) {
+                if(k>4 && !blocks[k-5].hasChildNodes()){
+                    console.log("üres"+k)
+                }
+            }*/
         }
-        
     }
-    }*/
-    $(".block").each((i, element) =>{
-        blocks[element.id]= element
-    })
-    console.log(candys)
+    }
 }
 
 $(function () {

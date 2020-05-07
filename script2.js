@@ -43,6 +43,7 @@ function generateMap(){
 }
 
 function drawMap(){
+    scanMap();
     gameArea.empty();
     map.forEach((element, i)=>{
         element.on("click", ()=>{
@@ -50,7 +51,6 @@ function drawMap(){
         })
         gameArea.append(element)
     })
-    scanMap();
 }
 
 function swapCandys(element, i){
@@ -90,15 +90,47 @@ function swapCandys(element, i){
 }
 
 function scanMap(){
-    for (let i=0; i < N*N; i+=5){
+    for (let i=0; i < N*N; i+=N){
         for(let j=0; j < N-2; j++){
-            if((map[i+j][0].className == map[i+j+1][0].className) && (map[i+j+1][0].className == map[i+j+2][0].className)){
-                map[i+j][0].style.backgroundColor="yellow";
-                map[i+j+1][0].style.backgroundColor="yellow";
-                map[i+j+2][0].style.backgroundColor="yellow";
+            if( map[i+j][0]!="" && map[i+j+1][0]!="" && map[i+j+2][0]!="" && (map[i+j][0].className == map[i+j+1][0].className) && (map[i+j+1][0].className == map[i+j+2][0].className)){
+                for(let l=0; l < 3; l++){
+                    var space = $("<div class='space'></div>");
+                    space.css({
+                        "top" : map[i+j+l].css("top"),
+                        "left" : map[i+j+l].css("left")
+                    })
+                    map[i+j+l]=space
+                }
+                gapLoad();
             }
         }
     }
+}
+
+function gapLoad(){
+    for (let j=0; j < N; j++){//oszlop
+        for(let i=N*N-1; i >= 0; i-=N){//sor
+            if(map[i-j][0].className == "space"){
+                for(k=i; k>=N; k-=N){
+                    computedSwap(map[k-j], k-j, map[k-j-N], k-j-N);
+                }
+            }
+        }
+    }
+}
+
+function computedSwap(e1, id1, e2, id2){
+    var tmp=e1[0]
+    var e_top = parseInt(e1[0].style.top)
+    var s_top = parseInt(e2[0].style.top)
+    var e_left = parseInt(e1[0].style.left)
+    var s_left = parseInt(e2[0].style.left)
+    map[id1][0]=e2[0]
+    map[id2][0]=tmp
+    map[id1][0].style.top=e_top+"px"
+    map[id1][0].style.left=e_left+"px"
+    map[id2][0].style.top=s_top+"px"
+    map[id2][0].style.left=s_left+"px"
 }
 
 $(function () {

@@ -60,23 +60,30 @@ function swapCandys(element, i){
         })
     } else {
         var tmp=element[0]
-        var e_top = element[0].style.top
-        var s_top = swap[0].style.top
-        var e_left = element[0].style.left
-        var s_left = swap[0].style.left
+        var e_top = parseInt(element[0].style.top)
+        var s_top = parseInt(swap[0].style.top)
+        var e_left = parseInt(element[0].style.left)
+        var s_left = parseInt(swap[0].style.left)
         if((((e_top-s_top) == 0 && (e_left-s_left) != 0) || ((e_top-s_top)!=0 && (e_left-s_left) == 0)) && Math.abs(e_top-s_top) <= 100 && Math.abs(e_left-s_left) <= 100){
+            console.log("belépett")
             map[i][0]=swap[0]
             map[swapID][0]=tmp
             
-            map[i][0].style.top=e_top
-            map[i][0].style.left=e_left
-            map[swapID][0].style.top=s_top
-            map[swapID][0].style.left=s_left
+            map[i][0].style.top=e_top+"px"
+            map[i][0].style.left=e_left+"px"
+            map[swapID][0].style.top=s_top+"px"
+            map[swapID][0].style.left=s_left+"px"
             map[i][0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
             swap=null;
             swapID=null;
             drawMap();
+        } else {
+            swap[0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
+            swap=null;
+            swapID=null;
+            drawMap();
         }
+        
         
     }
 }

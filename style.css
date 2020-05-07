@@ -13,7 +13,6 @@ body{
     margin-top: -250px;
     width: 500px;
     height: 500px;
-    border: solid purple 2px;
 }
 .block{
     background-color: rgba(83, 158, 243, 0.74);
@@ -25,6 +24,12 @@ body{
     background-color: rgb(55, 138, 233);
     box-shadow: -2px -2px -2px white;
 }
-.candy{
+.block img{
     width: 100px;
+}
+.counter{
+    color: white;
+    font-family: cursive;
+    text-shadow: 2px 2px 2px purple;
+    text-align: center;
 }

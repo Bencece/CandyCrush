@@ -1,4 +1,4 @@
-let N = 6
+let N = 5
 let blockSize = 500 / N;
 let gameArea;
 
@@ -22,6 +22,11 @@ let map = []
 let swap = null
 let swapID = null
 var counter = 10;
+let panel;
+var points = 0;
+var players = [];
+let player = '';
+var level = 1;
 
 /**
  * Map feltöltése cukorkákkal
@@ -39,6 +44,28 @@ function generateMap(){
  * Map kiírása a játéktáblára
  */
 function drawMap(){
+    if(counter <= 0){
+        $(".gamearea").empty();
+        $(".gamearea").hide()
+        players.push({
+            nev: player,
+            pont: points
+        })
+        console.log(players)
+        players.forEach(element =>{
+            var t = $("<tr><td>"+element.nev+"</td><td>"+element.pont+"</td></tr>")
+            $(".score").append(t)
+        })
+        $(".score").show()
+        $(".level").show()
+        $(".level").on("click",()=>{
+            points=0
+            counter=10
+            $(".score").hide()
+            $(".level").hide()
+            $(".gamearea").show()
+        })
+    }
     scanMap();
     for (let i = 0; i < N*N; i++){
         if(map[i][0].className == "space"){//ha van üres mező
@@ -54,6 +81,7 @@ function drawMap(){
         })
         gameArea.append(element)
     })
+    scanMap();
     /*gameArea.children.forEach((element, i)=>{
         console.log(element)
     })*/
@@ -74,14 +102,15 @@ function swapCandys(element, i){
         var s_left = parseInt(swap[0].style.left)
         if((((e_top-s_top) == 0 && (e_left-s_left) != 0) || ((e_top-s_top)!=0 && (e_left-s_left) == 0)) && Math.abs(e_top-s_top) <= 100 && Math.abs(e_left-s_left) <= 100){
             computedSwap(element, i, swap, swapID)
-            map[i][0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
+            map[i][0].style.backgroundColor="rgba(83, 158, 243, 0.9)";
             swap=null;
             swapID=null;
             counter--;
             $(".counter").text(counter)
+            $(".swoosh")[0].play()
             drawMap();
         } else {
-            swap[0].style.backgroundColor="rgba(83, 158, 243, 0.74)";
+            swap[0].style.backgroundColor="rgba(83, 158, 243, 0.9)";
             swap=null;
             swapID=null;
             drawMap();
@@ -102,6 +131,8 @@ function scanMap(){
                     map[i+j+l]=space
                 }
                 map[i+j+3]=generateCandy(parseInt(map[i+j+3].css("top"))/blockSize, parseInt(map[i+j+3].css("left"))/blockSize, 0)
+                points+=120;
+                $(".points").text(points)
                 gapLoad();
             }
         }
@@ -117,6 +148,8 @@ function scanMap(){
                     })
                     map[i+j+l]=space
                 }
+                points+=60
+                $(".points").text(points)
                 gapLoad();
             }
         }
@@ -160,7 +193,7 @@ function generateCandy(i, j, s=null){
             var candy = $(candys[4].img)
         }
     }
-    candy.addClass('candy');
+    //candy.addClass('candy');
     candy.css({
         width: blockSize,
         height: blockSize,
@@ -178,6 +211,16 @@ function computedSwap(e1, id1, e2, id2){
     var s_left = parseInt(e2[0].style.left)
     map[id1][0]=e2[0]
     map[id2][0]=tmp
+    /*map[id1][0].animate({
+        top: e_top+"px",
+        left: e_left+"px"
+    },1000)
+    map[id2][0].animate({
+        top: s_top+"px",
+        left: s_left+"px"
+    },1000,()=>{
+        next();
+    })*/
     map[id1][0].style.top=e_top+"px"
     map[id1][0].style.left=e_left+"px"
     map[id2][0].style.top=s_top+"px"
@@ -187,8 +230,19 @@ function computedSwap(e1, id1, e2, id2){
 $(function () {
     gameArea = $('<div></div>');
     gameArea.appendTo('body');
-    gameArea.attr('id', 'gamearea');
+    gameArea.attr('class', 'gamearea');
     
-    generateMap();
-    drawMap()
+    panel = $('<div></div>')
+
+    $(".score").hide()
+    $(".level").hide()
+
+    $(".ok").on("click",()=>{
+        player = $(".player").val()
+        console.log( $(".player").val())
+        $(".message").hide()
+        generateMap();
+        drawMap()
+    })
+
 });

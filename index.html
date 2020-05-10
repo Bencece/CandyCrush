@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Candy Crush</title>
-    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="script2.js"></script>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <audio autoplay loop>
+        <source src="candy.mp3" type="audio/mpeg">
+    </audio>
+    <audio class="swoosh">
+        <source src="swoosh.mp3" type="audio/mpeg">
+    </audio> 
     <h1 class="counter">10</h1>
+    <h2 class="points">0</h2>
+    <div class="message">
+        <input type="text" class="player" placeholder="Írd be a neved..."/>
+        <button class="ok">Start</button>
+    </div>
+    <table class="score"></table>
+    <button class="level">Következő szint</button>
 </body>
 </html>

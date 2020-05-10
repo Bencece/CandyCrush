@@ -5,7 +5,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
-#gamearea{
+.gamearea{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -14,15 +14,38 @@ body{
     width: 500px;
     height: 500px;
 }
-.counter{
+.counter, .score, .level{
     color: white;
     font-family: cursive;
     text-shadow: 2px 2px 2px purple;
     text-align: center;
 }
-.candy{
-    background-color: rgba(83, 158, 243, 0.74);
+.points{
+    color: gold;
+    font-family: cursive;
+    text-shadow: 2px 2px 2px purple;
+    text-align: center;
+}
+.gamearea img{
+    background-color: rgba(83, 158, 243, 0.9);
     position: absolute;
     border: solid rgb(0, 119, 255) 1px;
     border-radius: 8px 8px 8px 8px;
+}
+.message{
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    position: relative;
+    z-index: 11;
+}
+.ok, .level{
+    background-color: purple;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 15px 15px 15px 15px;
 }
